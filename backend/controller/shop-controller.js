@@ -4,9 +4,13 @@ const UserModel = require("../models/user-model");
 // Get all shops for the authenticated user
 exports.getShops = async (req, res) => {
   try {
-    const shops = await ShopModel.find({ user: req.user }).populate(
+    const shops = await ShopModel.find({ user: req.user.id }).populate(
       "transactions"
     );
+    //  const shops = await ShopModel.find({ user: req.user }).populate(
+    //   "transactions"
+    // );
+    console.log(shops);
     res.json(shops);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
@@ -28,7 +32,9 @@ exports.addShop = async (req, res) => {
     const data = await UserModel.findByIdAndUpdate(req.user.id, {
       $push: { shops: shop._id },
     });
-    res.status(201).json(shop);
+    res
+      .status(201)
+      .json({ shop, message: "Shop added successfully", success: true });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }

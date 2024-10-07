@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/auth-context";
 
 const SettingsPage = () => {
   const { auth } = useContext(AuthContext);
+  console.log(auth.user);
   return (
     <>
       {/* <div className="flex flex-col justify-center py-5 items-center lg:max-w-2xl lg:p-2"> */}
