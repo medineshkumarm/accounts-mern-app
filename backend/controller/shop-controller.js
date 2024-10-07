@@ -72,6 +72,10 @@ exports.updateShop = async (req, res) => {
 exports.deleteShop = async (req, res) => {
   try {
     const shop = await ShopModel.findByIdAndDelete(req.params.id);
+    
+    const data = await UserModel.findByIdAndUpdate(req.user.id, {
+      $pop: { shops: shop._id },
+    });
     if (!shop) return res.status(404).json({ msg: "Shop not found" });
     res.json({ msg: "Shop deleted" });
   } catch (error) {

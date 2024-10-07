@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
-import { Label, TextInput, Button, Table, Modal } from "flowbite-react";
+import { Label, TextInput, Button, Table, Modal, HR } from "flowbite-react";
 import { BsShop } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { AuthContext } from "../../context/auth-context";
 import { useContext, useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import api from "../../api/api";
 import clsx from "clsx";
 
@@ -23,8 +23,8 @@ const ShopsPage = () => {
         <hr />
         <AddShopFormComponent onShopAdded={triggerReload} />{" "}
       </div>
-
-      <div>
+      <HR />
+      <div className="pt-4">
         <h1 className="font-bold px-2 mb-2 text-xl">All Shop Details</h1>
         <hr />
         <ShopTableComponent
@@ -53,7 +53,7 @@ export function AddShopFormComponent({ onShopAdded }) {
 
   const handleError = (err) => {
     toast.error(err, {
-      position: "bottom-left",
+      position: "bottom-right",
     });
   };
 
@@ -83,7 +83,7 @@ export function AddShopFormComponent({ onShopAdded }) {
     const { success, message } = data;
     if (success) {
       handleSuccess(message);
-      onShopAdded(); 
+      onShopAdded();
     } else {
       handleError(message);
     }

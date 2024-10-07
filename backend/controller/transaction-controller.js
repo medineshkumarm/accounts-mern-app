@@ -24,31 +24,37 @@ exports.addTransaction = async (req, res) => {
     amount,
     paymentType,
     shopName,
+    shop: req.params.shopId,
   });
 
   try {
     const transaction = await newTransaction.save();
+    console.log("transaction saved: ", transaction);
+
     await ShopModel.findByIdAndUpdate(req.params.shopId, {
       $push: { transactions: transaction._id },
     });
-    res.status(201).json(transaction);
+    res.status(201).json({
+      message: "transaction add successfully",
+      transaction,
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server " });
+  }
+};
+
+// Get transaction by ID
+exports.getTransactionById = async (req, res) => {
+  try {
+    const transaction = await TransactionModel.findById(req.params.id);
+    if (!transaction)
+      return res.status(404).json({ msg: "Transaction not found" });
+    res.json(transaction);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 };
-
-
-// Get transaction by ID
-exports.getTransactionById = async (req, res) => {
-    try {
-        const transaction = await TransactionModel.findById(req.params.id);
-        if (!transaction) return res.status(404).json({ msg: 'Transaction not found' });
-        res.json(transaction);
-    } catch (error) {
-        res.status(500).json({ error: 'Server error' });
-    }
-};
-
 
 // Update transaction
 exports.updateTransaction = async (req, res) => {
