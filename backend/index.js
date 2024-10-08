@@ -25,8 +25,6 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 //models:
 
-
-
 //router imports:
 const { authMiddleware } = require("./middleware/auth-middleware");
 
@@ -36,22 +34,21 @@ const shopRoute = require("./routes/shop-routes");
 const authRoute = require("./routes/authRoutes");
 
 //routes:
-app.get("/", authMiddleware,(req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "hello world" });
 });
 
-
 // Use the routes
-app.use('/api/auth', authRoute);
-app.use('/api/users', userRoute);
-app.use('/api/shops', shopRoute);
-app.use('/api/transactions', transactionRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/shops", shopRoute);
+app.use("/api/transactions", transactionRoute);
 
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,
-    error: 'Server Error'
+    error: "Server Error",
   });
 };
 
