@@ -7,9 +7,6 @@ exports.getShops = async (req, res) => {
     const shops = await ShopModel.find({ user: req.user.id }).populate(
       "transactions"
     );
-    //  const shops = await ShopModel.find({ user: req.user }).populate(
-    //   "transactions"
-    // );
     console.log(shops);
     res.json(shops);
   } catch (error) {
@@ -29,7 +26,7 @@ exports.addShop = async (req, res) => {
 
   try {
     const shop = await newShop.save();
-    const data = await UserModel.findByIdAndUpdate(req.user.id, {
+    await UserModel.findByIdAndUpdate(req.user.id, {
       $push: { shops: shop._id },
     });
     res
@@ -72,12 +69,13 @@ exports.updateShop = async (req, res) => {
 exports.deleteShop = async (req, res) => {
   try {
     const shop = await ShopModel.findByIdAndDelete(req.params.id);
-    
-    const data = await UserModel.findByIdAndUpdate(req.user.id, {
-      $pop: { shops: shop._id },
-    });
     if (!shop) return res.status(404).json({ msg: "Shop not found" });
-    res.json({ msg: "Shop deleted" });
+
+    await UserModel.findByIdAndUpdate(req.user.id, {
+      $pull: { shops: shop._id },
+    });
+
+    res.json({ shop, message: "Shop deleted successfully", success: true });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }

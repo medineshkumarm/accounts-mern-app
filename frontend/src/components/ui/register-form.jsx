@@ -46,7 +46,7 @@ export const RegisterForm = () => {
     if (success) {
       handleSuccess(message);
       setTimeout(() => {
-        navigate("/test/login");
+        navigate("/login");
       }, 1000);
     } else {
       handleError(message);
@@ -116,7 +116,7 @@ export const RegisterForm = () => {
               <span className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <Link
-                  to={"/test/login"}
+                  to={"/login"}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Login here

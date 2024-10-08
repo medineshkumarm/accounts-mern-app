@@ -104,16 +104,6 @@ const AddTransactionForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    // Send POST request to add transaction for the selected shop
-    // const response = await api.post(
-    //   `/transactions/${selectedShop}`, // Use selectedShop (shop ID) for params
-    //   formData // Send formData with shopName and other fields
-    // );
-    // console.log("Transaction added:", response.data);
-    // } catch (error) {
-    // console.error("Error adding transaction:", error);
-    // }
     const { data } = await addTransaction(formData);
     const { success, message } = data;
     if (success) {
@@ -133,7 +123,7 @@ const AddTransactionForm = () => {
           <Label htmlFor="date" value="Choose a date" />
           <TextInput
             id="date"
-            type="datetime-local"
+            type="date"
             name="date"
             onChange={onChange}
             value={formData.date}

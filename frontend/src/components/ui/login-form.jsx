@@ -38,7 +38,7 @@ export const LoginForm = () => {
     if (success) {
       handleSuccess(message);
       setTimeout(() => {
-        navigate("/test");
+        navigate("/");
       }, 1000);
     } else {
       handleError(message);
@@ -92,7 +92,7 @@ export const LoginForm = () => {
               <span className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don{"'"}t have an account?{" "}
                 <Link
-                  to={"/test/register"}
+                  to={"/register"}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Register here

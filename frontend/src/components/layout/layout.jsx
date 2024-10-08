@@ -10,7 +10,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
-      navigate("/test/login");
+      navigate("/login");
     }
   }, [auth.isAuthenticated, navigate]);
   return (

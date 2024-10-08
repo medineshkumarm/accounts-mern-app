@@ -6,8 +6,14 @@ import { Label, TextInput, Button, HR, Table } from "flowbite-react";
 import { AuthContext } from "../../context/auth-context";
 
 const SettingsPage = () => {
+  const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
-  console.log(auth.user);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      navigate("/login");
+    }
+  }, [auth.isAuthenticated, navigate]);
   return (
     <>
       {/* <div className="flex flex-col justify-center py-5 items-center lg:max-w-2xl lg:p-2"> */}
@@ -79,11 +85,7 @@ const SettingsPage = () => {
           </div>
         </div>
 
-        {/* <HR /> */}
-        {/* <div className="ml-5 space-y-2 mb-2"> */}
         <div>
-          {/* <h1 className="px-5 font-bold text-md">Shop details</h1> */}
-          {/* <ShopTableComponent /> */}
           <Button size="sm" color="success" className="m-5 ">
             Save Changes
           </Button>
@@ -98,7 +100,8 @@ export default SettingsPage;
 
 import { FileInput } from "flowbite-react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export function FileUplodComponent() {
   return (
     <div className="flex items-center justify-center py-5">

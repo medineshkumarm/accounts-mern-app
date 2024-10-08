@@ -1,13 +1,28 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth-context";
 import AddTransactionForm from "../ui/add-transaction-form";
+import ShopTransactionsTable from "../ui/table/shop-transaction-table";
+import api from "../../api/api";
 
 const TransactionsPage = () => {
   const { auth } = useContext(AuthContext);
-  // const [reload, setReload] = useState(false);
+  const [shops, setShops] = useState([]); // State for shops
 
-  // const triggerReload = () => setReload(!reload);
+  useEffect(() => {
+    const fetchShops = async () => {
+      if (auth.token) {
+        try {
+          const response = await api.get("/shops");
+          console.log(response);
+          setShops(response.data);
+        } catch (error) {
+          console.error("Error fetching shop data:", error);
+        }
+      }
+    };
 
+    fetchShops();
+  }, [auth.token]);
   return (
     <div>
       <div>
@@ -16,13 +31,7 @@ const TransactionsPage = () => {
 
       <div>List of Transactions : filter by shops with dropdowns</div>
       <div>
-        {/* {auth.user.shops.map((shop, id) => (
-          <ul key={id}>
-            <li>{shop.shopName}</li>
-            <li>{shop.location}</li>
-            <li>{shop.shopNo}</li>
-          </ul>
-        ))} */}
+        <ShopTransactionsTable shops={shops} />
       </div>
       <div>Edit Transactions</div>
 

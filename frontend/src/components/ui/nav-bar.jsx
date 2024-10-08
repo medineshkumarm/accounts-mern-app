@@ -9,46 +9,14 @@ export default function NavBarComponent() {
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
-      navigate("/test/login");
+      navigate("/login");
     }
   }, [auth.isAuthenticated, navigate, logout]);
-  // const links = [
-  //   {
-  //     href: "/test",
-  //     name: "dashboard",
-  //   },
-  //   {
-  //     href: "/test/transactions",
-  //     name: "transactions",
-  //   },
-  //   {
-  //     href: "/test/shops",
-  //     name: "shops",
-  //   },
-  //   {
-  //     href: "/test/settings",
-  //     name: "settings",
-  //   },
-  // ];
+
   return (
     <nav className="flex space-x-6 h-14 border-b justify-between bg-white m-1 px-2">
       <div className="font-bold text-2xl p-2 ml-4">Company Logo here</div>
-      {/* {links.map((item) => (
-        <ul className="flex space-x-6" key={item.href}>
-          <li>
-            <NavLink
-              to={item.href}
-              className={({ isActive }) =>
-                `text-gray-600 hover:text-blue-600 ${
-                  isActive ? "font-semibold text-blue-600" : ""
-                }`
-              }
-            >
-              {item.name}
-            </NavLink>
-          </li>
-        </ul>
-      ))} */}
+
       <div className="flex gap-4 items-center p-4">
         <Dropdown
           arrowIcon={false}
@@ -74,9 +42,6 @@ export default function NavBarComponent() {
           </Dropdown.Header>
           <Dropdown.Item onClick={() => logout()}>Sign out</Dropdown.Item>
         </Dropdown>
-        {/* <div className="">
-          <DarkThemeToggle />
-        </div> */}
       </div>
     </nav>
   );

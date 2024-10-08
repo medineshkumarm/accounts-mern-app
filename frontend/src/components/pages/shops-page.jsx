@@ -10,6 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import api from "../../api/api";
 import clsx from "clsx";
+import {
+  handleError,
+  handleSuccess,
+} from "../../utils/functions/toast-function";
+import { addShopDetails } from "../../utils/functions/shop-function";
 
 const ShopsPage = () => {
   const [reload, setReload] = useState(false);
@@ -50,28 +55,6 @@ export function AddShopFormComponent({ onShopAdded }) {
       ...formData,
       [e.target.name]: e.target.value,
     });
-
-  const handleError = (err) => {
-    toast.error(err, {
-      position: "bottom-right",
-    });
-  };
-
-  const handleSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-  };
-
-  const addShopDetails = async (shopName, location, shopNo) => {
-    try {
-      const res = await api.post("/shops", { shopName, location, shopNo });
-      return res;
-    } catch (error) {
-      console.error("Failed to add shop details", error);
-      handleError("Error adding shop details");
-    }
-  };
 
   const onSubmit = async (e) => {
     e.preventDefault();

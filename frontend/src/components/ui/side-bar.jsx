@@ -12,30 +12,30 @@ export const SideBarComponent = () => {
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <NavLink
-            to="/test"
+            to="/"
             className={({ isActive }) =>
-              `text-gray-600 hover:text-blue-600 ${
-                isActive ? "font-semibold text-blue-600" : ""
+              `flex items-center text-gray-600 hover:text-blue-600 rounded-lg transition ${
+                isActive ? "font-semibold text-blue-600 bg-blue-100" : ""
               }`
             }
           >
             <Sidebar.Item icon={BiSolidDashboard}>Dashboard</Sidebar.Item>
           </NavLink>
           <NavLink
-            to="/test/transactions"
+            to="/transactions"
             className={({ isActive }) =>
-              `text-gray-600 hover:text-blue-600 ${
-                isActive ? "font-semibold text-blue-600" : ""
+              `flex items-center text-gray-600 hover:text-blue-600 rounded-lg transition ${
+                isActive ? "font-semibold text-blue-600 bg-blue-100" : ""
               }`
             }
           >
             <Sidebar.Item icon={GrTransaction}>Transactions</Sidebar.Item>
           </NavLink>
           <NavLink
-            to="/test/shops"
+            to="/shops"
             className={({ isActive }) =>
-              `text-gray-600 hover:text-blue-600 ${
-                isActive ? "font-semibold text-blue-600" : ""
+              `flex items-center text-gray-600 hover:text-blue-600 rounded-lg transition ${
+                isActive ? "font-semibold text-blue-600 bg-blue-100" : ""
               }`
             }
           >
@@ -46,16 +46,21 @@ export const SideBarComponent = () => {
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
           <NavLink
-            to="/test/settings"
+            to="/settings"
             className={({ isActive }) =>
-              `text-gray-600 hover:text-blue-600 ${
-                isActive ? "font-semibold text-blue-600" : ""
+              `flex items-center text-gray-600 hover:text-blue-600 rounded-lg transition ${
+                isActive ? "font-semibold text-blue-600 bg-blue-100" : ""
               }`
             }
           >
             <Sidebar.Item icon={IoSettingsSharp}>settings</Sidebar.Item>
           </NavLink>
-          <Sidebar.Item icon={IoLogOutSharp} onClick = {() => alert("log out ing...")}>Logout</Sidebar.Item>
+          <Sidebar.Item
+            icon={IoLogOutSharp}
+            onClick={() => alert("log out ing...")}
+          >
+            Logout
+          </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
