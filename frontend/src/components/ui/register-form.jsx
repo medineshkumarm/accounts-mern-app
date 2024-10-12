@@ -1,12 +1,16 @@
 import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
-import { Label, TextInput } from "flowbite-react";
+import { Label, Spinner, TextInput } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
 import { useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../context/auth-context";
+import {
+  handleError,
+  handleSuccess,
+} from "../../utils/functions/toast-function";
 
 export const RegisterForm = () => {
   const { register } = useContext(AuthContext);
@@ -23,33 +27,31 @@ export const RegisterForm = () => {
       [e.target.name]: e.target.value,
     });
 
-  const handleError = (err) => {
-    toast.error(err, {
-      position: "bottom-left",
-    });
-  };
+  const [loading, setLoading] = useState(false);
 
-  const handleSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-  };
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await register(
-      formData.email,
-      formData.username,
-      formData.password
-    );
+    setLoading(true);
+    try {
+      const { data } = await register(
+        formData.email,
+        formData.username,
+        formData.password
+      );
 
-    const { success, message } = data;
-    if (success) {
-      handleSuccess(message);
-      setTimeout(() => {
-        navigate("/login");
-      }, 1000);
-    } else {
-      handleError(message);
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -111,7 +113,11 @@ export const RegisterForm = () => {
                 type="submit"
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                Create an account
+                {loading ? (
+                  <Spinner aria-label="Loading..." />
+                ) : (
+                  " Create an account"
+                )}
               </button>
               <span className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}

@@ -1,11 +1,15 @@
 import { RiLockPasswordLine } from "react-icons/ri";
-import { Label, TextInput } from "flowbite-react";
+import { Label, TextInput, Spinner } from "flowbite-react";
 import { HiMail } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../../context/auth-context";
+import {
+  handleError,
+  handleSuccess,
+} from "../../utils/functions/toast-function";
 export const LoginForm = () => {
   const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
@@ -20,28 +24,25 @@ export const LoginForm = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-  const handleError = (err) => {
-    toast.error(err, {
-      position: "bottom-left",
-    });
-  };
-
-  const handleSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-  };
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await login(formData.email, formData.password);
-    const { success, message } = data;
-    if (success) {
-      handleSuccess(message);
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } else {
-      handleError(message);
+    setLoading(true);
+    try {
+      const { data } = await login(formData.email, formData.password);
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -87,7 +88,7 @@ export const LoginForm = () => {
                 type="submit"
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                Login
+                {loading ? <Spinner aria-label="Loading..." /> : "log in"}
               </button>
               <span className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don{"'"}t have an account?{" "}
