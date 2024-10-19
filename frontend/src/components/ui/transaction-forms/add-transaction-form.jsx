@@ -1,20 +1,14 @@
-import {
-  Label,
-  TextInput,
-  Select,
-  Spinner,
-} from "flowbite-react";
+import { Label, TextInput, Select, Spinner } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
-import api from "../../api/api";
-import { AuthContext } from "../../context/auth-context";
+import api from "../../../api/api";
+import { AuthContext } from "../../../context/auth-context";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import {
   handleError,
   handleSuccess,
-} from "../../utils/functions/toast-function";
+} from "../../../utils/functions/toast-function";
 
-// export default AddTransactionFormWithModal;
 const AddTransactionForm = () => {
   const { auth } = useContext(AuthContext);
   const [shops, setShops] = useState([]); // State for shops
@@ -35,6 +29,7 @@ const AddTransactionForm = () => {
           setShops(response.data);
         } catch (error) {
           console.error("Error fetching shop data:", error);
+          handleError("Failed to load shops");
         }
       }
     };
@@ -53,13 +48,13 @@ const AddTransactionForm = () => {
     const selectedShopId = e.target.value;
     const selectedShopName = shops.find(
       (shop) => shop._id === selectedShopId
-    ).shopName;
+    )?.shopName; // Optional chaining to avoid errors if shop is not found
 
     // Update both shopId and shopName in state
     setSelectedShop(selectedShopId); // Store shop ID separately for the params
     setFormData({
       ...formData,
-      shopName: selectedShopName, // Store shop name in formData
+      shopName: selectedShopName || "", // Store shop name in formData
     });
   };
 
@@ -72,22 +67,31 @@ const AddTransactionForm = () => {
       return res;
     } catch (error) {
       console.error("Error adding transaction:", error);
+      handleError("Failed to add transaction");
     }
   };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!selectedShop) {
+      handleError("Please select a shop");
+      return;
+    }
+
     setLoading(true);
-    const { data } = await addTransaction(formData);
     try {
+      const { data } = await addTransaction(formData);
       const { success, message } = data;
+
       if (success) {
         handleSuccess(message);
       } else {
         handleError(message);
       }
     } catch (error) {
-      handleError(error);
+      handleError("Something went wrong while adding the transaction");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -143,6 +147,7 @@ const AddTransactionForm = () => {
             onChange={handleShopChange} // Handle both shopName and shopId
             value={selectedShop} // Value is the selected shopId
             required
+            aria-label="Shop Selection" // ARIA label for accessibility
           >
             <option value="">Select a shop</option>
             {shops.map((shop) => (
@@ -160,6 +165,7 @@ const AddTransactionForm = () => {
           {loading ? <Spinner aria-label="Loading..." /> : " Add Transaction"}
         </button>
       </form>
+
       <ToastContainer
         position="bottom-right"
         autoClose={3000}

@@ -1,8 +1,7 @@
 import { HiMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
 import { IoIosColorPalette } from "react-icons/io";
-import { Label, TextInput, Button, HR, Table } from "flowbite-react";
+import { Label, TextInput, Button, HR } from "flowbite-react";
 import { AuthContext } from "../../context/auth-context";
 
 const SettingsPage = () => {
@@ -121,64 +120,6 @@ export function FileUplodComponent() {
         </div>
         <FileInput id="dropzone-file" className="hidden" />
       </Label>
-    </div>
-  );
-}
-
-export function ShopTableComponent() {
-  return (
-    <div className="overflow-x-auto ">
-      <Table className="mx-auto my-2 border-spacing-1 ">
-        <Table.Head>
-          <Table.HeadCell>ShopName</Table.HeadCell>
-          <Table.HeadCell>Location</Table.HeadCell>
-          <Table.HeadCell>Shop Number</Table.HeadCell>
-          <Table.HeadCell>More</Table.HeadCell>
-        </Table.Head>
-        <Table.Body className="divide-y">
-          <Table.Row className=" border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <Table.Cell className="font-bold text-gray-700">
-              Tyre Shop
-            </Table.Cell>
-            <Table.Cell>Chennai</Table.Cell>
-            <Table.Cell>001</Table.Cell>
-            <Table.Cell>
-              <Button size="sm" gradientDuoTone="greenToBlue">
-                <FaEdit className="mr-2 h-5 w-5" />
-                edit
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-          {/* 2 */}
-          <Table.Row className=" border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <Table.Cell className="font-bold text-gray-700">
-              Tyre Shop
-            </Table.Cell>
-            <Table.Cell>Chennai</Table.Cell>
-            <Table.Cell>001</Table.Cell>
-            <Table.Cell>
-              <Button size="sm" gradientDuoTone="greenToBlue">
-                <FaEdit className="mr-2 h-5 w-5" />
-                edit
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-          {/* 3 */}
-          <Table.Row className=" border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <Table.Cell className="font-bold text-gray-700">
-              Tyre Shop
-            </Table.Cell>
-            <Table.Cell>Chennai</Table.Cell>
-            <Table.Cell>001</Table.Cell>
-            <Table.Cell>
-              <Button size="sm" gradientDuoTone="greenToBlue">
-                <FaEdit className="mr-2 h-5 w-5" />
-                edit
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
     </div>
   );
 }
