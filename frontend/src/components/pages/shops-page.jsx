@@ -259,7 +259,6 @@ export function ShopTableComponent({ reload, onShopUpdated }) {
       </Table>
 
       {/* Edit Modal */}
-      {/* Edit Modal */}
       {editModal && currentShop && (
         <Modal show={editModal} onClose={() => setEditModal(false)}>
           <Modal.Header>Edit Shop Details</Modal.Header>

@@ -1,36 +1,18 @@
-import { Label, TextInput, Modal, Button, Select } from "flowbite-react";
-import { MdPayment } from "react-icons/md";
-import { RiMoneyRupeeCircleLine } from "react-icons/ri";
+import {
+  Label,
+  TextInput,
+  Select,
+  Spinner,
+} from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import api from "../../api/api";
 import { AuthContext } from "../../context/auth-context";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
-
-const AddTransactionFormWithModal = () => {
-  const [openModal, setOpenModal] = useState(true);
-  //   const [email, setEmail] = useState("");
-
-  function onCloseModal() {
-    setOpenModal(false);
-    // setEmail("");
-  }
-  return (
-    <>
-      <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
-      <Modal
-        show={openModal}
-        size="md"
-        onClose={onCloseModal}
-        position="top-left"
-        popup
-      >
-        <Modal.Header />
-        <Modal.Body>{/* <FormComponent /> */}</Modal.Body>
-      </Modal>
-    </>
-  );
-};
+import { ToastContainer } from "react-toastify";
+import {
+  handleError,
+  handleSuccess,
+} from "../../utils/functions/toast-function";
 
 // export default AddTransactionFormWithModal;
 const AddTransactionForm = () => {
@@ -43,6 +25,7 @@ const AddTransactionForm = () => {
     paymentType: "",
     shopName: "", // Keep shop name separately
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchShops = async () => {
@@ -79,17 +62,7 @@ const AddTransactionForm = () => {
       shopName: selectedShopName, // Store shop name in formData
     });
   };
-  const handleError = (err) => {
-    toast.error(err, {
-      position: "bottom-right",
-    });
-  };
 
-  const handleSuccess = (msg) => {
-    toast.success(msg, {
-      position: "bottom-right",
-    });
-  };
   const addTransaction = async (formData) => {
     try {
       const res = await api.post(
@@ -104,12 +77,19 @@ const AddTransactionForm = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const { data } = await addTransaction(formData);
-    const { success, message } = data;
-    if (success) {
-      handleSuccess(message);
-    } else {
-      handleError(message);
+    try {
+      const { success, message } = data;
+      if (success) {
+        handleSuccess(message);
+      } else {
+        handleError(message);
+      }
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -177,7 +157,7 @@ const AddTransactionForm = () => {
           type="submit"
           className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
-          Add Transaction
+          {loading ? <Spinner aria-label="Loading..." /> : " Add Transaction"}
         </button>
       </form>
       <ToastContainer
