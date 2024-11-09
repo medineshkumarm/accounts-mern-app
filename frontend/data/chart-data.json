@@ -1,0 +1,40 @@
+const data = [
+    { date: "2024-10-01", revenue: 1200, profit: 200 },
+    { date: "2024-10-02", revenue: 1800, profit: 300 },
+    { date: "2024-10-03", revenue: 2500, profit: 800 },
+    { date: "2024-10-04", revenue: 2200, profit: 500 },
+    { date: "2024-10-05", revenue: 2000, profit: 300 },
+    { date: "2024-10-06", revenue: 1500, profit: 100 },
+    { date: "2024-10-07", revenue: 1700, profit: 400 },
+    { date: "2024-10-08", revenue: 2300, profit: 600 },
+    { date: "2024-10-09", revenue: 2100, profit: 700 },
+    { date: "2024-10-10", revenue: 2500, profit: 900 },
+  ];
+
+  const paymentData = [
+    { name: "Cash", value: 3500, color: "#8884d8" },
+    { name: "Card", value: 4500, color: "#82ca9d" },
+    { name: "Online", value: 1500, color: "#ffbb28" },
+    { name: "Wallet", value: 1000, color: "#ff8042" },
+  ];
+
+  const shopData = [
+    { shopName: "Shop A", revenue: 5000, profit: 1200 },
+    { shopName: "Shop B", revenue: 3000, profit: 800 },
+    { shopName: "Shop C", revenue: 4500, profit: 1000 },
+    { shopName: "Shop D", revenue: 3500, profit: 700 },
+    { shopName: "Shop E", revenue: 4000, profit: 900 },
+  ];
+
+  const revenueProfitData = [
+    { date: "2024-10-01", revenue: 1200, profit: 200 },
+    { date: "2024-10-02", revenue: 1800, profit: 300 },
+    { date: "2024-10-03", revenue: 2500, profit: 800 },
+    { date: "2024-10-04", revenue: 2200, profit: 500 },
+    { date: "2024-10-05", revenue: 2000, profit: 300 },
+    { date: "2024-10-06", revenue: 1500, profit: 100 },
+    { date: "2024-10-07", revenue: 1700, profit: 400 },
+    { date: "2024-10-08", revenue: 2300, profit: 600 },
+    { date: "2024-10-09", revenue: 2100, profit: 700 },
+    { date: "2024-10-10", revenue: 2500, profit: 900 },
+  ];

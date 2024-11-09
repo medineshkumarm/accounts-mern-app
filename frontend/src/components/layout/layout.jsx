@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { Outlet, useNavigate } from "react-router-dom";
 import NavBarComponent from "../ui/nav-bar";
-import { SideBarComponentWithDrawer } from "../ui/side-bar";
+import { SideBarComponent, SideBarComponentWithDrawer } from "../ui/side-bar";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth-context";
 
@@ -27,11 +27,14 @@ const Layout = () => {
       {/* Main Content Area */}
       <div className="flex flex-1 gap-4 p-4 flex-col md:flex-row">
         {/* Sidebar - Hidden on small screens and displayed on medium screens and up */}
-        <div className="w-full md:w-1/4 max-w-xs">
+        <div className=" lg:hidden">
           <SideBarComponentWithDrawer
             isOpen={isDrawerOpen}
             setIsOpen={setIsDrawerOpen}
           />
+        </div>
+        <div className="hidden lg:block">
+          <SideBarComponent />
         </div>
 
         {/* Outlet for Nested Routes */}

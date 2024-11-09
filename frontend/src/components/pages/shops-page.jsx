@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Label, TextInput, Button, Table, Modal, HR } from "flowbite-react";
+import { Label, TextInput, Button, Table, Modal } from "flowbite-react";
 import { BsShop } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -25,10 +25,8 @@ const ShopsPage = () => {
     <div>
       <div>
         <h1 className="font-bold py-2 text-xl">Add Shop Details</h1>
-        <hr />
-        <AddShopFormComponent onShopAdded={triggerReload} />{" "}
+        <AddShopModal onShopAdded={triggerReload} /> {/* Modal Component */}
       </div>
-      <HR />
       <div className="pt-4">
         <h1 className="font-bold px-2 mb-2 text-xl">All Shop Details</h1>
         <hr />
@@ -42,6 +40,30 @@ const ShopsPage = () => {
 };
 
 export default ShopsPage;
+
+function AddShopModal({ onShopAdded }) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+
+  return (
+    <>
+      <Button onClick={handleOpen} className="mb-4">
+        Add New Shop
+      </Button>
+      <Modal show={modalOpen} onClose={handleClose}>
+        <Modal.Header>Add Shop Details</Modal.Header>
+        <Modal.Body>
+          <AddShopFormComponent
+            onShopAdded={onShopAdded}
+            onClose={handleClose}
+          />
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}
 
 export function AddShopFormComponent({ onShopAdded }) {
   const [formData, setFormData] = useState({

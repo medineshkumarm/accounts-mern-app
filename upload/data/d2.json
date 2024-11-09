@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2024-11-01T00:00:00.000Z",
+    "amount": 100,
+    "paymentType": "cash",
+    "shopName": "Shop A"
+  },
+  {
+    "date": "2024-11-02T00:00:00.000Z",
+    "amount": 150,
+    "paymentType": "card",
+    "shopName": "Shop B"
+  }
+]

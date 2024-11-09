@@ -23,6 +23,10 @@ const userSchema = new Schema(
         ref: "shop",
       },
     ],
+    profilePicture: {
+      type: String, // URL of the profile picture
+      required: false,
+    },
   },
   { timestamps: true }
 );

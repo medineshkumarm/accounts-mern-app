@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { AuthProvider } from "./context/auth-context";
 import { RegisterForm } from "./components/ui/register-form";
 import { LoginForm } from "./components/ui/login-form";
@@ -7,6 +12,7 @@ import TransactionsPage from "./components/pages/transactions-page";
 import SettingsPage from "./components/pages/settings-page";
 import Layout from "./components/layout/layout";
 import ShopsPage from "./components/pages/shops-page";
+import AnalyticsPage from "./components/pages/analytics";
 
 function App() {
   return (
@@ -19,6 +25,7 @@ function App() {
             <Route path="transactions" element={<TransactionsPage />} />
             <Route path="shops" element={<ShopsPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
           </Route>
 
           <Route path="/register" element={<RegisterForm />} />

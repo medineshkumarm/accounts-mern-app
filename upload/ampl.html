@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaction Upload</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 p-8">
+    <h1 class="text-2xl font-bold mb-4">Upload Transactions</h1>
+
+    <!-- File Upload Form -->
+    <form id="uploadForm" class="mb-6">
+      <label class="block mb-2" for="file">Choose a JSON or Excel file:</label>
+      <input
+        type="file"
+        id="file"
+        name="file"
+        accept=".json, .xlsx, .xls"
+        required
+        class="mb-4 p-2 border border-gray-300 rounded"
+      />
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Upload Transactions
+      </button>
+    </form>
+
+    <!-- Add New Shop Form -->
+    <h2 class="text-xl font-semibold mb-2">Add New Shop</h2>
+    <form id="shopForm">
+      <label class="block mb-2" for="shopName">Shop Name:</label>
+      <input
+        type="text"
+        id="shopName"
+        name="shopName"
+        required
+        class="mb-4 p-2 border border-gray-300 rounded"
+      />
+
+      <label class="block mb-2" for="location">Location:</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        required
+        class="mb-4 p-2 border border-gray-300 rounded"
+      />
+
+      <label class="block mb-2" for="shopNo">Shop Number:</label>
+      <input
+        type="text"
+        id="shopNo"
+        name="shopNo"
+        required
+        class="mb-4 p-2 border border-gray-300 rounded"
+      />
+
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">
+        Add Shop
+      </button>
+    </form>
+
+    <div id="message" class="mt-4"></div>
+
+    <script>
+      // Handle file upload
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const formData = new FormData();
+          const fileInput = document.getElementById("file");
+          formData.append("file", fileInput.files[0]);
+
+          try {
+            const response = await fetch("/upload", {
+              method: "POST",
+              body: formData,
+            });
+
+            const result = await response.text();
+            document.getElementById("message").innerText = result;
+            if (response.ok) {
+              document.getElementById("uploadForm").reset(); // Reset the form on success
+            }
+          } catch (error) {
+            console.error("Error uploading file:", error);
+            document.getElementById("message").innerText =
+              "Error uploading file.";
+          }
+        });
+
+      // Handle add shop
+      document
+        .getElementById("shopForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const shopData = {
+            shopName: document.getElementById("shopName").value,
+            location: document.getElementById("location").value,
+            shopNo: document.getElementById("shopNo").value,
+          };
+
+          try {
+            const response = await fetch("/add-shop", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(shopData),
+            });
+
+            const result = await response.text();
+            document.getElementById("message").innerText = result;
+            if (response.ok) {
+              document.getElementById("shopForm").reset(); // Reset the form on success
+            }
+          } catch (error) {
+            console.error("Error adding shop:", error);
+            document.getElementById("message").innerText = "Error adding shop.";
+          }
+        });
+    </script>
+  </body>
+</html>

@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -32,7 +32,7 @@ const transactionRoute = require("./routes/transaction-route");
 const userRoute = require("./routes/user-routes");
 const shopRoute = require("./routes/shop-routes");
 const authRoute = require("./routes/authRoutes");
-
+const statsRoute = require("./routes/statsRoutes");
 //routes:
 app.get("/", (req, res) => {
   res.json({ message: "hello world" });
@@ -43,6 +43,11 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/shops", shopRoute);
 app.use("/api/transactions", transactionRoute);
+
+app.use("/api", authMiddleware, statsRoute);
+
+//uploaded profile picture:
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
